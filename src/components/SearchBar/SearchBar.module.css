@@ -1,11 +1,11 @@
 .searchContainer {
   background-image: url("https://img.freepik.com/vector-gratis/fondo-galaxia-realista_23-2148991322.jpg");
-  width: 350px;
+  width: 280px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+/*   gap: 1rem; */
 
   border-radius: 10px;
 
@@ -13,12 +13,20 @@
   -webkit-box-shadow: 0px 1px 23px 25px rgba(255, 6, 220, 0.62);
   -moz-box-shadow: 0px 1px 23px 25px rgba(255, 6, 220, 0.62);
 }
+.searchContainer input {
+  height: 25px;
+  border: 0px;
+  border-radius: 10px 0px 0px 10px;
 
-.searchContainer button{
-   font-family: "Rick-and-Morty";
-    border-radius: 10px;
-    color: white;
-    background-color: blueviolet;
-    width: 30%;
-    font-size: 14px;
-}   
+}
+
+.searchContainer button {
+  font-family: "Rick-and-Morty";
+  height: 25px;
+  border: 0px;
+  border-radius: 0px 10px 10px 0;
+  color: white;
+  background-color: blueviolet;
+  width: 30%;
+  font-size: 14px;
+}
