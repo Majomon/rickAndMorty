@@ -5,9 +5,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-/*   gap: 1rem; */
 
-  border-radius: 10px;
+  border-radius: 10px 0px 0px 10px;
 
   box-shadow: 0px 1px 23px 25px rgba(255, 6, 220, 0.62);
   -webkit-box-shadow: 0px 1px 23px 25px rgba(255, 6, 220, 0.62);

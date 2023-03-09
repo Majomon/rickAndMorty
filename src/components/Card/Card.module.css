@@ -1,6 +1,6 @@
 .cajaCard {
-  width: 220px;
-  height: 300px;
+  width: 200px;
+  height: 270px;
   background-image: url("https://img.freepik.com/vector-gratis/fondo-galaxia-realista_23-2148991322.jpg");
   border: 1px solid black;
   border-radius: 10px;
@@ -8,6 +8,7 @@
   -webkit-box-shadow: 0px 1px 23px 25px rgba(255, 6, 220, 0.62);
   -moz-box-shadow: 0px 1px 23px 25px rgba(255, 6, 220, 0.62);
   transition: 1s;
+  margin: 1rem 3rem;
 }
 
 .cajaCard:hover {
@@ -30,7 +31,7 @@
 }
 
 .cardImage {
-  width: 80%;
+  width: 75%;
   border: 1px solid black;
   border-radius: 50%;
   padding: 0 auto;
@@ -47,4 +48,8 @@
 
   background-color: blueviolet;
   color: white;
+}
+
+.cardOnClick:hover{
+  background-color: rgba(74, 204, 21, 0.62);;
 }
