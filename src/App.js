@@ -1,7 +1,11 @@
 import "./App.css";
-import Cards from "./components/Cards/Cards.jsx";
+import Cards from "./components/Cards/Cards";
 import NavBar from "./components/NavBar/NavBar";
 import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import About from "./components/views/About";
+import Detail from "./components/Detail/Detail";
+import Form from "./components/Form/Form";
 
 function App() {
   const [characters, setCharacters] = useState([]);
@@ -26,11 +30,17 @@ function App() {
     // porque filter.... no modifica el array original
     setCharacters(characters.filter((char) => char.id !== id));
   };
-  
+
   return (
     <div className="App">
       <NavBar onSearch={onSearch} />
-      <Cards characters={characters} onClose={onClose}/>
+      <Routes>
+        <Route path="/" element={<Form/>}/>
+        <Route path="/home" element={<Cards characters={characters} onClose={onClose} />}/>
+        <Route path="/about" element={<About/>}/>
+        <Route path="/detail/:detailId" element={<Detail/>}/>
+      </Routes>
+
     </div>
   );
 }
