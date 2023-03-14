@@ -1,64 +1,45 @@
-import { useState } from "react";
-import style from "./Form.module.css";
+import React from 'react'
+import { useState,useEffect } from 'react'
+import style from "./Form.module.css"
+import validate from "./validate.js"
 
-const validate = (form, setErrors, errors) => {
-  if (!form.email) setErrors({ ...errors, email: "Email vacío" });
-  else {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{3})+$/.test(form.email))
-      setErrors({ ...errors, email: "" });
-    else setErrors({ ...errors, email: "Email inválido" });
-  }
-};
 
-const Form = () => {
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
+export default function Form() {
+
+  const [userData, setUserData] = useState({
+    username:"",
+    password:"",
   });
 
   const [errors, setErrors] = useState({
-    email: "",
-    password: "",
+    username:"",
+    password:"",
   });
 
-  const handleChange = (event) => {
-    const property = event.target.name;
-    const value = event.target.value;
 
-    setForm({ ...form, [property]: value }); // cambio form...
-    validate({ ...form, [property]: value }, setErrors, errors);
-  };
-
-  const submitHandler = (event) => {
-    event.preventDefault();
-    alert("LOGIN EXITOSO");
-  };
+  const handleInputChange=(event)=>{
+    const property=event.target.name;
+    const value=event.target.value;
+    
+    setUserData({...userData,[property]:value})
+    validate({...userData,[property]:value},setErrors,errors)
+  }
 
   return (
-    <form onSubmit={submitHandler}>
-      <div>
-        <label htmlFor="username">email:</label>
-        <input
-          type="text"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          className={errors.email ? style.error : style.success}
-        />
-        <span>{errors.email}</span>
-      </div>
-      <div>
-        <label htmlFor="password">Password:</label>
-        <input
-          type="text"
-          name="password"
-          value={form.password}
-          onChange={handleChange}
-        />
-      </div>
-      <button type="submit">Login</button>
-    </form>
-  );
-};
+    <form action="" className={style.form}>
+    <div>
+      <label htmlFor="username">Username: </label>
+      <input type="text" name='username' value={userData.username} onChange={handleInputChange}/>
+      <h2>{errors.username}</h2>
+    </div>
+    <div>
+      <label htmlFor="password">Password: </label>
+      {/* Cambiamos el tipo de input a "password" */}
+      <input type="password" name='password' value={userData.password} onChange={handleInputChange}/>
+      <p>{errors.password}</p>
+    </div>
+    <button>LOGIN</button>
+  </form>
+  )
+}
 
-export default Form;

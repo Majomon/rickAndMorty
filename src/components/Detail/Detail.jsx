@@ -1,12 +1,13 @@
 import React from "react";
-import { useState,useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
+import style from "./Detail.module.css";
 
 export default function Detail() {
   // Toma el valor gurdado en /detailID
   /*  const params=useParams(); */
-  const {detailId}=useParams()
+  const { detailId } = useParams();
 
   const [character, setCharacter] = useState({});
   // Cuando el componente se monta se ejecuta la petición
@@ -18,22 +19,55 @@ export default function Detail() {
     axios(`${URL_BASE}/character/${detailId}?key=${KEY}`).then((response) =>
       setCharacter(response.data)
     );
-  }, [detailId]);
+  }, []);
 
   return (
-    <div>
+    <div className={style.characterContainer}>
       {character.name ? (
         <>
-          <h2>{character.name}</h2>
-          <p>{character.status}:</p>
-          <p>{character.species}</p>
-          <p>{character.gender}:</p>
-          <p>{character.origin?.name}</p>{" "}
-          {/* Cuando nos aseguremos que de origin llega recien monta todo */}
-          <img src={character.image} alt="img" />
+          <div className={style.characterCard}>
+            <div className={style.characterCardInfo}>
+              <h2 className={style.characterCardName}>{character.name}</h2>
+              <p className={style.characterCardStatus}>
+                Estado: {character.status}
+              </p>
+              <p className={style.characterCardSpecies}>
+                Especie: {character.species}
+              </p>
+              <p className={style.characterCardGender}>
+                Género: {character.gender}
+              </p>
+              <p className={style.characterCardOrigin}>
+                Oringen: {character.origin?.name}
+              </p>{" "}
+              {/* Cuando nos aseguremos que de origin llega recien monta todo */}
+            </div>
+            <img
+              className={style.characterCardImage}
+              src={character.image}
+              alt="img"
+            />
+          </div>
+          <NavLink to="/home" className={style.navLinkDetaill}>
+            Volver
+          </NavLink>
         </>
       ) : (
-        <h3>Loading</h3>
+        <div className={style.characterContainer}>
+          <div className={style.characterCard}>
+            <div className={style.skChaseContainer}>
+              <h2>Cargando</h2>
+              <div className={style.skChase}>
+                <div className={style.skChaseDot}></div>
+                <div className={style.skChaseDot}></div>
+                <div className={style.skChaseDot}></div>
+                <div className={style.skChaseDot}></div>
+                <div className={style.skChaseDot}></div>
+                <div className={style.skChaseDot}></div>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

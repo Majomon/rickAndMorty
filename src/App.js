@@ -3,6 +3,7 @@ import Cards from "./components/Cards/Cards";
 import NavBar from "./components/NavBar/NavBar";
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import About from "./components/views/About";
 import Detail from "./components/Detail/Detail";
 import Form from "./components/Form/Form";
@@ -30,17 +31,21 @@ function App() {
     // porque filter.... no modifica el array original
     setCharacters(characters.filter((char) => char.id !== id));
   };
+  // Devuelve un objeto con una propiedad que contiene la ruta
+  const { pathname } = useLocation();
 
   return (
     <div className="App">
-      <NavBar onSearch={onSearch} />
+      {pathname !== "/" && <NavBar onSearch={onSearch} />}
       <Routes>
-        <Route path="/" element={<Form/>}/>
-        <Route path="/home" element={<Cards characters={characters} onClose={onClose} />}/>
-        <Route path="/about" element={<About/>}/>
-        <Route path="/detail/:detailId" element={<Detail/>}/>
+        <Route path="/" element={<Form />} />
+        <Route
+          path="/home"
+          element={<Cards characters={characters} onClose={onClose} />}
+        />
+        <Route path="/about" element={<About />} />
+        <Route path="/detail/:detailId" element={<Detail />} />
       </Routes>
-
     </div>
   );
 }
