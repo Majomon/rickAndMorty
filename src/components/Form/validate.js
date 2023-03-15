@@ -3,12 +3,11 @@ const validate = (userData, setErrors, errors) => {
     setErrors({ ...errors, username: "Email vacío" });
   } else if (userData.username.length > 35) {
     setErrors({ ...errors, username: "Demasiados caracteres - El máx es de 35" });
-  } else if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{3})+$/.test(userData.username)) {
-    setErrors({ ...errors, username: "" })
-  } else {
+  } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{3})+$/.test(userData.username)) {
     setErrors({ ...errors, username: "Email inválido" });
+  } else {
+    setErrors({ ...errors, username: "" })
   }
-
   // La validación del password
   if (!userData.password) {
     setErrors({ ...errors, password: "Por favor, completa este campo" })
@@ -19,8 +18,6 @@ const validate = (userData, setErrors, errors) => {
   } else {
     setErrors({ ...errors, password: "" })
   }
+  
 };
-
-
-
 export default validate;
