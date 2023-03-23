@@ -1,0 +1,13 @@
+.cardContainer{
+    display: flex;
+    flex-wrap:wrap;
+    justify-content: center;
+}
+
+.h1Favoritos{
+    background-color: rgba(77, 110, 113, 0.6);
+    height: fit-content;
+    box-shadow: -1px 5px 9px 4px rgba(0, 0, 0, 1);
+    -webkit-box-shadow: -1px 5px 9px 4px rgba(0, 0, 0, 1);
+    -moz-box-shadow: -1px 5px 9px 4px rgba(0, 0, 0, 1);
+}
