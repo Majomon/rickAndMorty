@@ -44,7 +44,6 @@
 
 .corazonRojo {
   all: unset;
-  background-color: transparent;
   font-size: 40px;
   position: relative;
   top: 55px;
@@ -55,7 +54,6 @@
 
 .corazonBlanco {
   all: unset;
-  background-color: transparent;
   font-size: 40px;
   position: relative;
   top: 55px;

@@ -1,48 +1,60 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
-import { addFavorite, removeFavorite } from "../../redux/actions";
+import { getFavorites, removeFavorite } from "../../redux/actions";
 import styles from "./Card.module.css";
 
-function Card({
-  id,
-  name,
-  species,
-  gender,
-  image,
-  onClose,
-  addFavorite,
-  removeFavorite,
-  myFavorites,
-}) {
+function Card({ id, name, species, gender, image, onClose, myFavorites }) {
   const [isFav, setIsFav] = useState(false);
-  const  pathname  = useLocation();
-console.log(pathname);
+  const pathname = useLocation();
+  const dispatch = useDispatch();
+
+  //! Cada que cargue el componente me trae los favoritos
+
+  //! Cada que cargue el componente me trae el estado local de myFavorites
   useEffect(() => {
     myFavorites.forEach((fav) => {
       if (fav.id === id) {
         setIsFav(true);
-        console.log(myFavorites);
       }
     });
   }, [myFavorites]);
 
+
+
+  //! Agregando a favoritos directamente al server
+
+  const addFavorite = (character) => {
+    axios
+      .post("http://localhost:3001/fav", character)
+      .then((res) => console.log("Ok"));
+  };
+
+  const removeFavorite = async (id) => {
+    await axios.delete(`http://localhost:3001/fav/${id}`);
+    dispatch(getFavorites());
+    alert("Eliminado con éxito");
+  };
+
+  //! Para agregar a favoritos
   const handleFavorite = () => {
     if (isFav) {
       setIsFav(false);
       removeFavorite(id);
     } else {
+      //! Primero seteo en Verdadero al estado "isFav"
       setIsFav(true);
+      //! Hago una petición POST a mi servidor y agrego mi card Favorita
       addFavorite({
         id,
         name,
         species,
         gender,
         image,
-        onClose,
-        addFavorite,
-        removeFavorite,
       });
+      //! Pido que me traiga a mis favoritos por medio de una petición GET a mi servidor
+      dispatch(getFavorites());
     }
   };
 
@@ -79,15 +91,13 @@ console.log(pathname);
 // Crea una funcion con el mismo nombre y las haces dispatch osea las mejoras, esto va a las props - Linea 8
 const mapDispatchToProps = (dispatch) => {
   return {
-    addFavorite: (character) => {
-      dispatch(addFavorite(character));
-    },
     removeFavorite: (id) => {
       dispatch(removeFavorite(id));
     },
   };
 };
 
+//! Como es componente de clase traigo mi estado global de redux por medio de mapStateToProps
 const mapStateToProps = (state) => {
   return {
     myFavorites: state.myFavorites,

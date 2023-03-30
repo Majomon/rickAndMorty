@@ -13,10 +13,11 @@ export default function Detail() {
   // Cuando el componente se monta se ejecuta la petición
   // npm i axios - uso similar a fetch
   useEffect(() => {
-    const URL_BASE = "https://be-a-rym.up.railway.app/api";
-    const KEY = "b6892061a8d9.e2bb2e6f05488ea2cfc3";
+    /*     const URL_BASE = "https://be-a-rym.up.railway.app/api";
+    const KEY = "b6892061a8d9.e2bb2e6f05488ea2cfc3"; */
+    const URL_BASE = "http://localhost:3001";
 
-    axios(`${URL_BASE}/character/${detailId}?key=${KEY}`).then((response) =>
+    axios(`${URL_BASE}/detail/${detailId}`).then((response) =>
       setCharacter(response.data)
     );
   }, [detailId]);

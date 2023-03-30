@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import {Navigate,Route,Routes,useLocation,useNavigate,} from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import "./App.css";
 import Cards from "./components/Cards/Cards";
 import Detail from "./components/Detail/Detail";
@@ -8,11 +14,12 @@ import Form from "./components/Form/Form";
 import NavBar from "./components/NavBar/NavBar";
 import About from "./components/views/About";
 
+
 function App() {
   const [characters, setCharacters] = useState([]);
 
   // Devuelve un objeto con una propiedad que contiene la ruta
-  const  pathname  = useLocation();
+  const pathname = useLocation();
 
   // Control de acceso
   const [access, setAccess] = useState(false);
@@ -26,7 +33,7 @@ function App() {
 
   useEffect(() => {
     const handleBackButton = () => {
-      if (pathname === "/") {
+      if (pathname.pathname === "/") {
         window.history.pushState(null, "", "/");
         navigate("/home");
       }
@@ -36,16 +43,16 @@ function App() {
       window.removeEventListener("popstate", handleBackButton);
     };
   }, [pathname]);
-  
+
   //Credenciales de mentira
   const username = "mauri@gmail.com";
   const password = "pass1234";
 
   const onSearch = (id) => {
-    const URL_BASE = "http://localhost:3001/rickandmorty";
-/*     const KEY = "b6892061a8d9.e2bb2e6f05488ea2cfc3"; */
 
-    fetch(`${URL_BASE}/character/${id}`)
+    const URL_BASE = "http://localhost:3001";
+
+    fetch(`${URL_BASE}/onsearch/${id}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.name && !characters.find((char) => char.id === data.id)) {
@@ -74,11 +81,17 @@ function App() {
 
   return (
     <div className="App">
-      {pathname !== "/" && <NavBar onSearch={onSearch} />}
+      {pathname.pathname !== "/" && <NavBar onSearch={onSearch} />}
       <Routes>
-        <Route path="/" element={access ? <Navigate to="/home" /> : <Form login={login} />}/>
-        <Route path="/home" element={<Cards characters={characters} onClose={onClose} />}/>
-        <Route path="/about" element={<About onClose={onClose}/>} />
+        <Route
+          path="/"
+          element={access ? <Navigate to="/home" /> : <Form login={login} />}
+        />
+        <Route
+          path="/home"
+          element={<Cards characters={characters} onClose={onClose} />}
+        />
+        <Route path="/about" element={<About onClose={onClose} />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/detail/:detailId" element={<Detail />} />
       </Routes>

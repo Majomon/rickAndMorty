@@ -1,26 +1,25 @@
-const http = require("http");
-const data = require("./utils/data");
+require("dotenv").config();
+// Para que el server pueda usar routes
+const express = require("express");
+const router = require("./routes");
+const morgan = require("morgan");
+const cors = require("cors");
+const PORT = process.env.PORT || 3001;
 
-http
-  .createServer((req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    const { url } = req;
-    console.log(url);
+// Creando el server con Express
+const server = express();
 
-    if (url.includes("rickandmorty/character/")) {
-      const id = url.split("/").at(-1); // Saco el id - con el -1 voy a la ultima posición
-      const character = data.find((char)=>char.id==id) // Busca el personaje de ID tanto
-      console.log(`Estoy en la ruta con el id ${id}`);
-      console.log(character);
+//  Transforma en objeto JSON
+server.use(express.json());
 
-      if(character){
-        res.writeHead(200,{"Content-Type":"application/json"})
-        return res.end(JSON.stringify(character))
-      }else{
-        res.writeHead(404,{"content-Type": "application/json"})
-        return res.end(JSON.stringify({error: "Character not found"}))
-      }
+// Nos da información sobre lo que pasa en el servidor
+server.use(morgan("dev"));
 
-    }
-  })
-  .listen(3001, "localhost");
+// Permisos
+server.use(cors());
+
+// El server esta habilitado para usar router
+server.use("/", router);
+
+
+module.exports = server;

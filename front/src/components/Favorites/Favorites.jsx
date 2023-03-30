@@ -1,17 +1,20 @@
 import React from "react";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { filterCards, orderCards } from "../../redux/actions";
 import Card from "../Card/Card";
 import styles from "./Favorites.module.css";
 
 function Favorites(props) {
   const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.myFavorites);
 
+  //! Ordena por orden ascendente o descendente
   const handleOrderChange = (event) => {
     const order = event.target.value;
     dispatch(orderCards(order));
   };
 
+  //! Filtra según genero
   const handleFilterChange = (event) => {
     const filter = event.target.value;
     dispatch(filterCards(filter));
@@ -37,7 +40,7 @@ function Favorites(props) {
         </select>
       </div>
 
-      {props.myFavorites.map(({ id, name, species, gender, image }) => {
+      {favorites.map(({ id, name, species, gender, image }) => {
         return (
           <div>
             <Card
@@ -55,9 +58,4 @@ function Favorites(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    myFavorites: state.myFavorites,
-  };
-};
-export default connect(mapStateToProps, null)(Favorites);
+export default Favorites;

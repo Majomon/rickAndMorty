@@ -1,4 +1,6 @@
-import {ADD_FAVORITE,REMOVE_FAVORITE,FILTER_CARDS,ORDER_CARDS,} from "./actions";
+import {
+  FILTER_CARDS, GET_FAVORITES, ORDER_CARDS, REMOVE_FAVORITE
+} from "./actions";
 
 const initialState = {
   myFavorites: [],
@@ -6,15 +8,13 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, action) => {
-
-
   switch (action.type) {
-    case ADD_FAVORITE:
+    /*     case ADD_FAVORITE:
       return {
         ...state,
         myFavorites: [...state.myFavorites, action.payload],
         allCharacters: [...state.allCharacters, action.payload],
-      };
+      }; */
 
     case REMOVE_FAVORITE:
       const updatedAllCharacters = state.allCharacters.filter(
@@ -27,6 +27,14 @@ const rootReducer = (state = initialState, action) => {
         ),
         allCharacters: updatedAllCharacters,
       };
+
+    case GET_FAVORITES:
+      return {
+        ...state,
+        myFavorites: action.payload,
+        allCharacters: action.payload,
+      };
+
     case FILTER_CARDS:
       const filter = action.payload;
       if (filter === "all") {
