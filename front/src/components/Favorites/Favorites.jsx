@@ -54,6 +54,7 @@ function Favorites(props) {
           </div>
         );
       })}
+      
     </div>
   );
 }

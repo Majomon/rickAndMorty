@@ -4,11 +4,20 @@ import { connect, useDispatch } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
 import { getFavorites, removeFavorite } from "../../redux/actions";
 import styles from "./Card.module.css";
+import imageFav from "../../assets/removeFavorite.gif"
 
 function Card({ id, name, species, gender, image, onClose, myFavorites }) {
   const [isFav, setIsFav] = useState(false);
   const pathname = useLocation();
   const dispatch = useDispatch();
+  const [mostrarImagen, setMostrarImagen] = useState(false);
+
+  const mostrarImagenFav = async () => {
+    await setMostrarImagen(true);
+    setTimeout(() => {
+      setMostrarImagen(false);
+    }, 1900);
+  };
 
   //! Cada que cargue el componente me trae los favoritos
 
@@ -17,6 +26,7 @@ function Card({ id, name, species, gender, image, onClose, myFavorites }) {
     myFavorites.forEach((fav) => {
       if (fav.id === id) {
         setIsFav(true);
+
       }
     });
   }, [myFavorites]);
@@ -33,8 +43,8 @@ function Card({ id, name, species, gender, image, onClose, myFavorites }) {
 
   const removeFavorite = async (id) => {
     await axios.delete(`http://localhost:3001/fav/${id}`);
+    mostrarImagenFav()
     dispatch(getFavorites());
-    alert("Eliminado con éxito");
   };
 
   //! Para agregar a favoritos
@@ -59,7 +69,7 @@ function Card({ id, name, species, gender, image, onClose, myFavorites }) {
   };
 
   return (
-    <div>
+    <div className={styles.caja}>
       {isFav ? (
         <button onClick={handleFavorite} className={styles.corazonRojo}>
           ❤️
@@ -71,12 +81,12 @@ function Card({ id, name, species, gender, image, onClose, myFavorites }) {
       )}
       <div className={styles.cajaCard}>
         <div className={styles.cajaCardOnClick}>
-          {pathname.pathname !== "/favorites" && (
-            <button onClick={() => onClose(id)} className={styles.cardOnClick}>
+          {pathname.pathname !== "/favorites" && (<button onClick={() => onClose(id)} className={styles.cardOnClick}>
               X
             </button>
           )}
         </div>
+        
         <NavLink className={styles.cardInfo} to={`/detail/${id}`}>
           <h2 className={styles.cardName}>{name}</h2>
         </NavLink>
@@ -84,6 +94,14 @@ function Card({ id, name, species, gender, image, onClose, myFavorites }) {
         <h2 className={styles.cardGender}>{gender}</h2>
         <img className={styles.cardImage} src={image} alt={name} />
       </div>
+      {mostrarImagen && (
+        <img 
+          src={imageFav} 
+          alt="Imagen" 
+          className={`${styles.imagenAparicion} ${mostrarImagen? styles.imagenAparece : ""}`}
+        />
+      )}
+      
     </div>
   );
 }

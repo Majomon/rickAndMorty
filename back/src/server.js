@@ -15,7 +15,7 @@ server.use(express.json());
 // Nos da información sobre lo que pasa en el servidor
 server.use(morgan("dev"));
 
-// Permisos
+// Permisos - Controla el acceso al servidor
 server.use(cors());
 
 // El server esta habilitado para usar router

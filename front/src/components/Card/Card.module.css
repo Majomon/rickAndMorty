@@ -1,3 +1,30 @@
+.caja {
+  animation-name: slideInLeft;
+  animation-duration: 0.8s;
+  transition: "ease-in-out";
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+
+.imagenAparicion {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.imagenAparece {
+  opacity: 1;
+}
+
 .cajaCard {
   width: 180px;
   height: fit-content;
@@ -29,7 +56,7 @@
   margin: 5px 10%;
   border-radius: 10px;
   text-decoration: none;
-  transition: .5s;
+  transition: 0.5s;
 }
 
 .cardName:hover {
@@ -81,7 +108,6 @@
 .cardOnClick:hover {
   background-color: rgba(74, 204, 21, 0.62);
   cursor: pointer;
-
 }
 
 .cardInfo {
